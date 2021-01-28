@@ -1,0 +1,4 @@
+name: CustomGUI
+version: ${project.version}
+main: net.dohaw.customgui.CustomGUI
+api-version: 1.16

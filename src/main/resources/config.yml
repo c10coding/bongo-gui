@@ -1,0 +1,31 @@
+Compass Name: GUI Compass
+
+Menus:
+  example_menu:
+    Title: Example Menu
+    Number of Slots: 9
+    Slots:
+      1:
+        Material: RED_WOOL
+        Display Name: "The display name for the wool"
+        Lore:
+          - "This is the first lore line"
+        Amount: 1
+        Actions:
+          Commands:
+            - "heal %player%"
+            - "fly %player%"
+          GUI: example_menu2
+  example_menu2:
+    Title: Example Menu2
+    Number of Slots: 9
+    Slots:
+      1:
+        Material: BLACK_WOOL
+        Amount: 1
+        Display Name: "The display name for the wool"
+        Actions:
+          Commands:
+            - "heal %player%"
+            - "fly %player%"
+          GUI: example_menu2
