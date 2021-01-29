@@ -11,26 +11,27 @@ import java.util.List;
 public class CustomGuiMenu extends Menu {
 
     private List<GuiSlotInfo> slotInfo;
+    private Material fillerMat;
 
-    public CustomGuiMenu(JavaPlugin plugin, Menu previousMenu, String menuTitle, int numSlots, List<GuiSlotInfo> slotInfo) {
-        super(plugin, previousMenu, menuTitle, numSlots);
+    public CustomGuiMenu(JavaPlugin plugin, String menuTitle, int numSlots, List<GuiSlotInfo> slotInfo, Material fillerMat) {
+        super(plugin, null, menuTitle, numSlots);
         this.slotInfo = slotInfo;
+        this.fillerMat = fillerMat;
     }
 
     @Override
     public void initializeItems(Player p) {
         for(GuiSlotInfo info : slotInfo){
-
             int slot = info.getNumSlot();
             String displayName = info.getDisplayName();
             Material mat = info.getMaterial();
             int amount = info.getAmount();
             List<String> lore = info.getLore();
-
             inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
-
         }
-        setFillerMaterial(Material.);
+        if(fillerMat != null){
+            setFillerMaterial(fillerMat);
+        }
     }
 
     @Override

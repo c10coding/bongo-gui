@@ -52,17 +52,19 @@ public class BongoUtils {
         int amount = 0;
         for(ItemStack is : contents){
             if(isBongoCompass(is)){
-                amount++;
+                amount += is.getAmount();
             }
         }
         return amount;
     }
 
     public static boolean isBongoCompass(ItemStack stack){
-        ItemMeta meta = stack.getItemMeta();
-        if(meta != null){
-            PersistentDataContainer pdc = meta.getPersistentDataContainer();
-            return pdc.has(NamespacedKey.minecraft(pdcCompassKey), PersistentDataType.INTEGER);
+        if(stack != null){
+            ItemMeta meta = stack.getItemMeta();
+            if(meta != null){
+                PersistentDataContainer pdc = meta.getPersistentDataContainer();
+                return pdc.has(NamespacedKey.minecraft(pdcCompassKey), PersistentDataType.INTEGER);
+            }
         }
         return false;
     }
@@ -71,9 +73,10 @@ public class BongoUtils {
         PlayerInventory inv = player.getInventory();
         for(ItemStack is : inv.getContents()){
             if(isBongoCompass(is)){
-                is.setAmount(1);
+                inv.remove(is);
             }
         }
+        inv.addItem(BongoGUIPlugin.compass.clone());
     }
 
 }

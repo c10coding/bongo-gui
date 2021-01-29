@@ -2,6 +2,7 @@ package net.dohaw.bongogui;
 
 import lombok.Getter;
 import net.dohaw.corelib.helpers.MathHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -23,12 +24,10 @@ public class GuiManager {
 
         ConfigurationSection menuSection = plugin.getBaseConfig().getMenus();
         if(menuSection != null){
-            List<GuiSlotInfo> allInfo = new ArrayList<>();
+            List<GuiSlotInfo> menuInfo = new ArrayList<>();
             for(String menuKey : menuSection.getKeys(false)){
 
-                String rootPath = "Menus." + menuKey + ".";
-                String title = menuSection.getString(rootPath + "Title");
-                int numSlots = menuSection.getInt(rootPath + "Number of Slots");
+                String rootPath = menuKey + ".";;
 
                 ConfigurationSection slotsSection = menuSection.getConfigurationSection(rootPath + "Slots");
                 if(slotsSection != null){
@@ -36,23 +35,28 @@ public class GuiManager {
                         if(MathHelper.isInt(slotStr)){
 
                             int slot = Integer.parseInt(slotStr);
-                            rootPath = rootPath + "Slots." + slot + ".";
-                            List<String> lore = menuSection.getStringList("Lore");
-                            List<String> commandsRanOnClick = menuSection.getStringList(rootPath + "Actions.Commands");
-                            String guiOpenedOnClick = menuSection.getString(rootPath + "Actions.GUI");
-                            Material mat = Material.valueOf(menuSection.getString(rootPath + "Material"));
-                            int amount = menuSection.getInt(rootPath + "Amount");
-                            String displayName = menuSection.getString(rootPath + "Display Name");
-                            Material fillerMat = menuSection.getString(rootPath + "Filler Material");
+                            rootPath = slot + ".";
+
+                            List<String> lore = slotsSection.getStringList(rootPath + "Lore");
+                            List<String> commandsRanOnClick = slotsSection.getStringList(rootPath + "Actions.Commands");
+                            int amount = slotsSection.getInt(rootPath + "Amount", 1);
+
+                            String displayName = slotsSection.getString(rootPath + "Display Name", null);
+                            String guiOpenedOnClick = slotsSection.getString(rootPath + "Actions.GUI");
+
+                            Material mat = Material.valueOf(slotsSection.getString(rootPath + "Material", "RED_WOOL"));
 
                             GuiSlotInfo info = GuiSlotInfo.builder()
-                                    .amount(amount)
-                                    .commandsRanOnClick(commandsRanOnClick)
-                                    .lore(lore)
-                                    .material(mat)
-                                    .numSlot(slot)
-                                    .guiOpenedOnClick(guiOpenedOnClick)
-                                    .displayName()
+                                .amount(amount)
+                                .commandsRanOnClick(commandsRanOnClick)
+                                .lore(lore)
+                                .material(mat)
+                                .numSlot(slot)
+                                .guiOpenedOnClick(guiOpenedOnClick)
+                                .displayName(displayName)
+                                .build();
+
+                            menuInfo.add(info);
 
                         }else{
                             throw new IllegalArgumentException("There is a slot that isn't an integer in the gui menu \"" + menuKey + "\"");
@@ -63,11 +67,24 @@ public class GuiManager {
                     throw new NullPointerException("The \"Slots\" sections in your config cannot be found!");
                 }
 
+                rootPath = menuKey + ".";
+                Material fillerMat = Material.valueOf(menuSection.getString(rootPath + "Filler Material", "AIR"));
+                String title = menuSection.getString(rootPath + "Title", "Custom GUI");
+                int numSlots = menuSection.getInt(rootPath + "Number of Slots", 9);
+                CustomGuiMenu menu = new CustomGuiMenu(plugin, title, numSlots, menuInfo, fillerMat);
+                menus.put(menuKey, menu);
+                menuInfo = new ArrayList<>();
+
             }
+
         }else{
             throw new NullPointerException("The Menus section in your config can't be found!");
         }
 
+    }
+
+    public CustomGuiMenu getMenu(String key){
+        return menus.getOrDefault(key, null);
     }
 
 }

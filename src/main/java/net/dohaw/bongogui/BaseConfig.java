@@ -24,5 +24,8 @@ public class BaseConfig extends Config {
         return config.getConfigurationSection("Menus");
     }
 
+    public String getCompassMenuKey(){
+        return config.getString("Compass Menu");
+    }
 
 }
