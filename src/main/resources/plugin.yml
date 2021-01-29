@@ -1,4 +1,4 @@
-name: CustomGUI
+name: BongoGUI
 version: ${project.version}
-main: net.dohaw.customgui.CustomGUI
+main: net.dohaw.bongogui.BongoGUIPlugin
 api-version: 1.16

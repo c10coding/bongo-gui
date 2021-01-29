@@ -1,9 +1,13 @@
-Compass Name: GUI Compass
+Compass Display Name: Compass
+Compass Lore:
+  - "This is the first lore line"
+  - "This is the second lore line"
 
 Menus:
   example_menu:
     Title: Example Menu
     Number of Slots: 9
+    Filler Material: BLACK_GLASS_PANE
     Slots:
       1:
         Material: RED_WOOL
@@ -19,6 +23,7 @@ Menus:
   example_menu2:
     Title: Example Menu2
     Number of Slots: 9
+    Filler Material: BLACK_GLASS_PANE
     Slots:
       1:
         Material: BLACK_WOOL

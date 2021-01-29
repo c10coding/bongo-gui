@@ -1,8 +1,10 @@
-package net.dohaw.customgui;
+package net.dohaw.bongogui;
 
 import net.dohaw.corelib.Config;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public class BaseConfig extends Config {
 
@@ -10,8 +12,12 @@ public class BaseConfig extends Config {
         super(plugin, "config.yml");
     }
 
-    public String getBookName(){
-        return config.getString("Book Name");
+    public String getCompassDisplayName(){
+        return config.getString("Compass Display Name");
+    }
+
+    public List<String> getCompassLore(){
+        return config.getStringList("Compass Lore");
     }
 
     public ConfigurationSection getMenus(){
