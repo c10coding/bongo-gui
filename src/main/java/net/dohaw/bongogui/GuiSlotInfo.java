@@ -10,8 +10,7 @@ import java.util.List;
 public class GuiSlotInfo {
 
     @Getter private int numSlot;
-    @Getter private List<String> commandsRanOnClick;
-    @Getter private String guiOpenedOnClick;
+    @Getter SlotActionWrapper actionWrapper;
     @Getter private Material material;
     @Getter private int amount;
     @Getter private String displayName;

@@ -2,3 +2,16 @@ name: BongoGUI
 version: ${project.version}
 main: net.dohaw.bongogui.BongoGUIPlugin
 api-version: 1.16
+
+commands:
+  bongogui:
+    description: The main command for this plugin
+    aliases:
+      - bongog
+      - bong
+      - bg
+      - bongui
+
+permissions:
+  bongogui.reload:
+    default: op

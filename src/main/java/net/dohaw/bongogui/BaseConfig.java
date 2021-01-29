@@ -10,6 +10,8 @@ public class BaseConfig extends Config {
 
     public BaseConfig(JavaPlugin plugin) {
         super(plugin, "config.yml");
+        config.options().header("THIS IS A TEST");
+        config.options().copyHeader(true);
     }
 
     public String getCompassDisplayName(){
@@ -25,7 +27,7 @@ public class BaseConfig extends Config {
     }
 
     public String getCompassMenuKey(){
-        return config.getString("Compass Menu");
+        return config.getString("Compass Menu", null);
     }
 
 }

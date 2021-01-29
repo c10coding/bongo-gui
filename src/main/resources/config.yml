@@ -1,3 +1,5 @@
+# Want to know the different materials? Take a look at this link: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+
 Compass Display Name: Compass
 Compass Lore:
   - "This is the first lore line"
@@ -7,15 +9,31 @@ Compass Menu: example_menu
 Menus:
   example_menu:
     Title: Example Menu
-    Number of Slots: 9
+    # Make sure the number of slots is a multiple of 9.
+    Number of Slots: 18
+    # Fill this out if you want to fill in the rest of the menu with something (The empty spots)
     Filler Material: BLACK_STAINED_GLASS_PANE
+    # The slots are 0 indexed meaning the first slot would be the number 0. The second slot is number 1, and so on...
     Slots:
       1:
         Material: RED_WOOL
-        Display Name: "The display name for the wool"
+        Display Name: "The display name for the wool2"
         Lore:
-          - "This is the first lore line"
-        Amount: 1
+          - "This is the first lore line2"
+        Amount: 5
+        Actions:
+          # Don't put the slash for the command!
+          Commands:
+            - "heal %player%"
+            - "fly %player%"
+          GUI: example_menu2
+      5:
+        Material: APPLE
+        Display Name: "Another one"
+        Lore:
+          - "Lore line"
+          - "Another Lore Line"
+        Amount: 5
         Actions:
           Commands:
             - "heal %player%"

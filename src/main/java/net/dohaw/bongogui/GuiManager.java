@@ -38,21 +38,23 @@ public class GuiManager {
                             rootPath = slot + ".";
 
                             List<String> lore = slotsSection.getStringList(rootPath + "Lore");
+
                             List<String> commandsRanOnClick = slotsSection.getStringList(rootPath + "Actions.Commands");
+                            String guiOpenedOnClick = slotsSection.getString(rootPath + "Actions.GUI");
+                            SlotActionWrapper actionWrapper = new SlotActionWrapper(commandsRanOnClick, guiOpenedOnClick);
+
                             int amount = slotsSection.getInt(rootPath + "Amount", 1);
 
                             String displayName = slotsSection.getString(rootPath + "Display Name", null);
-                            String guiOpenedOnClick = slotsSection.getString(rootPath + "Actions.GUI");
 
                             Material mat = Material.valueOf(slotsSection.getString(rootPath + "Material", "RED_WOOL"));
 
                             GuiSlotInfo info = GuiSlotInfo.builder()
                                 .amount(amount)
-                                .commandsRanOnClick(commandsRanOnClick)
+                                .actionWrapper(actionWrapper)
                                 .lore(lore)
                                 .material(mat)
                                 .numSlot(slot)
-                                .guiOpenedOnClick(guiOpenedOnClick)
                                 .displayName(displayName)
                                 .build();
 
