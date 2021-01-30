@@ -1,5 +1,6 @@
 package net.dohaw.bongogui;
 
+import net.dohaw.corelib.StringUtils;
 import net.dohaw.corelib.helpers.ItemStackHelper;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,8 +31,8 @@ public class BongoUtils {
         }
 
         ItemStack activator = new ItemStack(activatorMaterial);
-        String displayName = baseConfig.getActivatorDisplayName();
-        List<String> lore = baseConfig.getActivatorLore();
+        String displayName = StringUtils.colorString(baseConfig.getActivatorDisplayName());
+        List<String> lore = StringUtils.colorLore(baseConfig.getActivatorLore());
         ItemMeta meta = activator.getItemMeta();
 
         assert meta != null;
