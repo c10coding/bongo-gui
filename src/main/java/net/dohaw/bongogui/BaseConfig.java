@@ -10,24 +10,27 @@ public class BaseConfig extends Config {
 
     public BaseConfig(JavaPlugin plugin) {
         super(plugin, "config.yml");
-        config.options().header("THIS IS A TEST");
         config.options().copyHeader(true);
     }
 
-    public String getCompassDisplayName(){
-        return config.getString("Compass Display Name");
+    public String getActivatorDisplayName(){
+        return config.getString("Activator Display Name");
     }
 
-    public List<String> getCompassLore(){
-        return config.getStringList("Compass Lore");
+    public List<String> getActivatorLore(){
+        return config.getStringList("Activator Lore");
     }
 
     public ConfigurationSection getMenus(){
         return config.getConfigurationSection("Menus");
     }
 
-    public String getCompassMenuKey(){
-        return config.getString("Compass Menu", null);
+    public String getActivatorMenuKey(){
+        return config.getString("Activator Menu", null);
+    }
+
+    public String getActivatorMaterial(){
+        return config.getString("Activator Material", "WRITABLE_BOOK");
     }
 
 }

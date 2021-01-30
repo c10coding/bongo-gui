@@ -1,10 +1,10 @@
 # Want to know the different materials? Take a look at this link: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-
-Compass Display Name: Compass
-Compass Lore:
+Activator Material: WRITABLE_BOOK
+Activator Display Name: Compass
+Activator Lore:
   - "This is the first lore line"
   - "This is the second lore line"
-Compass Menu: example_menu
+Activator Menu: example_menu
 
 Menus:
   example_menu:
@@ -27,6 +27,7 @@ Menus:
             - "heal %player%"
             - "fly %player%"
           GUI: example_menu2
+        Will Close On Click: true
       5:
         Material: APPLE
         Display Name: "Another one"
@@ -39,6 +40,7 @@ Menus:
             - "heal %player%"
             - "fly %player%"
           GUI: example_menu2
+        Will Close On Click: true
   example_menu2:
     Title: Example Menu2
     Number of Slots: 9
@@ -53,3 +55,4 @@ Menus:
             - "heal %player%"
             - "fly %player%"
           GUI: example_menu2
+        Will Close On Click: true

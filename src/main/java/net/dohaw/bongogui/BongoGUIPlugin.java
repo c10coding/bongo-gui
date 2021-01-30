@@ -15,10 +15,10 @@ import org.bukkit.scheduler.BukkitTask;
  */
 public final class BongoGUIPlugin extends JavaPlugin {
 
-    public static ItemStack compass;
+    public static ItemStack guiActivator;
     @Getter private BaseConfig baseConfig;
     @Getter private GuiManager guiManager;
-    @Getter private String compassMenuKey;
+    @Getter private String activatorMenuKey;
 
     @Getter private BukkitTask compassChecker;
 
@@ -38,14 +38,14 @@ public final class BongoGUIPlugin extends JavaPlugin {
     @Override
     public void onDisable() { }
 
-    public ItemStack getCompass(){
-        return compass.clone();
+    public ItemStack getGuiActivator(){
+        return guiActivator.clone();
     }
 
     public void loadFields(){
-        this.compassMenuKey = baseConfig.getCompassMenuKey();
-        compass = BongoUtils.createCompass(baseConfig);
-        this.compassChecker = new CompassChecker().runTaskTimer(this, 0L, 100L);
+        this.activatorMenuKey = baseConfig.getActivatorMenuKey();
+        guiActivator = BongoUtils.createGuiActivator(this);
+        this.compassChecker = new ActivatorChecker().runTaskTimer(this, 0L, 100L);
         this.guiManager = new GuiManager(this);
         guiManager.loadGuis();
     }

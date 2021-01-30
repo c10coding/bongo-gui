@@ -69,6 +69,11 @@ public class CustomGuiMenu extends Menu implements Listener {
         SlotActionWrapper actionWrapper = actionPerSlot.getOrDefault(slotClicked, null);
         if(actionWrapper != null){
 
+            boolean willCloseOnClick = actionWrapper.isWillCloseOnClick();
+            if(willCloseOnClick){
+                player.closeInventory();
+            }
+
             List<String> commandsRan = actionWrapper.getCommandsToExecute();
             if(commandsRan != null ){
                 if(!commandsRan.isEmpty()){

@@ -4,14 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class CompassChecker extends BukkitRunnable {
+public class ActivatorChecker extends BukkitRunnable {
 
     @Override
     public void run() {
         for(Player player : Bukkit.getOnlinePlayers()){
-            int numCompasses = BongoUtils.getNumCompasses(player);
-            if(numCompasses > 1 || numCompasses == 0){
-                BongoUtils.ensureOneCompass(player);
+            int numActivators = BongoUtils.getNumActivators(player);
+            if(numActivators > 1 || numActivators == 0){
+                BongoUtils.ensureOneActivator(player);
             }
         }
     }

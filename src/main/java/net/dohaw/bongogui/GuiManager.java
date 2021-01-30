@@ -41,7 +41,8 @@ public class GuiManager {
 
                             List<String> commandsRanOnClick = slotsSection.getStringList(rootPath + "Actions.Commands");
                             String guiOpenedOnClick = slotsSection.getString(rootPath + "Actions.GUI");
-                            SlotActionWrapper actionWrapper = new SlotActionWrapper(commandsRanOnClick, guiOpenedOnClick);
+                            boolean willCloseOnClick = slotsSection.getBoolean(rootPath + "Will Close On Click");
+                            SlotActionWrapper actionWrapper = new SlotActionWrapper(commandsRanOnClick, guiOpenedOnClick, willCloseOnClick);
 
                             int amount = slotsSection.getInt(rootPath + "Amount", 1);
 
