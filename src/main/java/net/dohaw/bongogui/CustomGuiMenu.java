@@ -4,6 +4,8 @@ import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.menus.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,6 +74,16 @@ public class CustomGuiMenu extends Menu implements Listener {
             boolean willCloseOnClick = actionWrapper.isWillCloseOnClick();
             if(willCloseOnClick){
                 player.closeInventory();
+            }
+
+            PromptCompletionWrapper pcw = actionWrapper.getPromptCompletionWrapper();
+            String promptMessage = pcw.getPrompt();
+            String completionCommand = pcw.getCommand();
+            if(promptMessage != null && completionCommand != null){
+                player.closeInventory();
+                ConversationFactory cf = new ConversationFactory(plugin);
+                Conversation conv = cf.withFirstPrompt(new CommandCompletionPrompt(promptMessage, completionCommand)).withLocalEcho(false).buildConversation(player);
+                conv.begin();
             }
 
             List<String> commandsRan = actionWrapper.getCommandsToExecute();
