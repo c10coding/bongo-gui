@@ -16,4 +16,8 @@ public class GuiSlotInfo {
     @Getter private String displayName;
     @Getter private List<String> lore;
 
+    public String toString(){
+        return "SLOT: " + numSlot + " | MATERIAL: " + material + " | ";
+    }
+
 }

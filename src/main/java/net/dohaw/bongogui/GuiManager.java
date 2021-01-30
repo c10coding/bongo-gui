@@ -27,7 +27,7 @@ public class GuiManager {
             List<GuiSlotInfo> menuInfo = new ArrayList<>();
             for(String menuKey : menuSection.getKeys(false)){
 
-                String rootPath = menuKey + ".";;
+                String rootPath = menuKey + ".";
 
                 ConfigurationSection slotsSection = menuSection.getConfigurationSection(rootPath + "Slots");
                 if(slotsSection != null){
@@ -77,6 +77,7 @@ public class GuiManager {
                 Material fillerMat = Material.valueOf(menuSection.getString(rootPath + "Filler Material", "AIR"));
                 String title = menuSection.getString(rootPath + "Title", "Custom GUI");
                 int numSlots = menuSection.getInt(rootPath + "Number of Slots", 9);
+
                 CustomGuiMenu menu = new CustomGuiMenu(plugin, title, numSlots, menuInfo, fillerMat);
                 menus.put(menuKey, menu);
                 menuInfo = new ArrayList<>();

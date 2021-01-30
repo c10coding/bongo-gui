@@ -66,53 +66,57 @@ public class CustomGuiMenu extends Menu implements Listener {
         if (!topInventory.equals(inv)) return;
         if (clickedItem == null && e.getCursor() == null) return;
 
-        e.setCancelled(true);
+        if(clickedInventory.equals(inv)){
 
-        SlotActionWrapper actionWrapper = actionPerSlot.getOrDefault(slotClicked, null);
-        if(actionWrapper != null){
+            e.setCancelled(true);
 
-            boolean willCloseOnClick = actionWrapper.isWillCloseOnClick();
-            if(willCloseOnClick){
-                player.closeInventory();
-            }
+            SlotActionWrapper actionWrapper = actionPerSlot.getOrDefault(slotClicked, null);
+            if(actionWrapper != null){
 
-            PromptCompletionWrapper pcw = actionWrapper.getPromptCompletionWrapper();
-            String promptMessage = pcw.getPrompt();
-            String completionCommand = pcw.getCommand();
-            if(promptMessage != null && completionCommand != null){
-                player.closeInventory();
-                ConversationFactory cf = new ConversationFactory(plugin);
-                Conversation conv = cf.withFirstPrompt(new CommandCompletionPrompt((BongoGUIPlugin) plugin, promptMessage, completionCommand)).withLocalEcho(false).buildConversation(player);
-                conv.begin();
-            }
+                boolean willCloseOnClick = actionWrapper.isWillCloseOnClick();
+                if(willCloseOnClick){
+                    player.closeInventory();
+                }
 
-            List<String> commandsRan = actionWrapper.getCommandsToExecute();
-            if(commandsRan != null ){
-                if(!commandsRan.isEmpty()){
-                    for(String command : commandsRan){
-                        if(command.contains("/")){
-                            command = command.replace("/", "");
+                PromptCompletionWrapper pcw = actionWrapper.getPromptCompletionWrapper();
+                String promptMessage = pcw.getPrompt();
+                String completionCommand = pcw.getCommand();
+                if(promptMessage != null && completionCommand != null){
+                    player.closeInventory();
+                    ConversationFactory cf = new ConversationFactory(plugin);
+                    Conversation conv = cf.withFirstPrompt(new CommandCompletionPrompt((BongoGUIPlugin) plugin, promptMessage, completionCommand)).withLocalEcho(false).buildConversation(player);
+                    conv.begin();
+                }
+
+                List<String> commandsRan = actionWrapper.getCommandsToExecute();
+                if(commandsRan != null ){
+                    if(!commandsRan.isEmpty()){
+                        for(String command : commandsRan){
+                            if(command.contains("/")){
+                                command = command.replace("/", "");
+                            }
+                            if(command.contains("%player%")){
+                                command = command.replace("%player%", player.getName());
+                            }
+                            player.performCommand(command);
                         }
-                        if(command.contains("%player%")){
-                            command = command.replace("%player%", player.getName());
-                        }
-                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                     }
                 }
-            }
 
-            String guiKeyToOpen = actionWrapper.getGuiKeyToOpen();
-            if(guiKeyToOpen != null){
-                BongoGUIPlugin bongoGUIPlugin = (BongoGUIPlugin) plugin;
-                GuiManager guiManager = bongoGUIPlugin.getGuiManager();
-                CustomGuiMenu menu = guiManager.getMenu(guiKeyToOpen);
-                if(menu != null){
-                    menu.initializeItems(player);
-                    player.closeInventory();
-                    menu.openInventory(player);
-                }else{
-                    throw new NullPointerException("The menu key " + guiKeyToOpen + " does not exist! Please check your BongoGUI config!");
+                String guiKeyToOpen = actionWrapper.getGuiKeyToOpen();
+                if(guiKeyToOpen != null){
+                    BongoGUIPlugin bongoGUIPlugin = (BongoGUIPlugin) plugin;
+                    GuiManager guiManager = bongoGUIPlugin.getGuiManager();
+                    CustomGuiMenu menu = guiManager.getMenu(guiKeyToOpen);
+                    if(menu != null){
+                        menu.initializeItems(player);
+                        player.closeInventory();
+                        menu.openInventory(player);
+                    }else{
+                        throw new NullPointerException("The menu key " + guiKeyToOpen + " does not exist! Please check your BongoGUI config!");
+                    }
                 }
+
             }
 
         }
