@@ -1,9 +1,9 @@
 # Want to know the different materials? Take a look at this link: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 Activator Material: WRITABLE_BOOK
-Activator Display Name: Compass
+Activator Display Name: "&aActivator"
 Activator Lore:
-  - "This is the first lore line"
-  - "This is the second lore line"
+  - "&bThis is the first lore line"
+  - "&eThis is the second lore line"
 Activator Menu: example_menu
 
 Menus:

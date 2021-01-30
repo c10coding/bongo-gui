@@ -82,7 +82,7 @@ public class CustomGuiMenu extends Menu implements Listener {
             if(promptMessage != null && completionCommand != null){
                 player.closeInventory();
                 ConversationFactory cf = new ConversationFactory(plugin);
-                Conversation conv = cf.withFirstPrompt(new CommandCompletionPrompt(promptMessage, completionCommand)).withLocalEcho(false).buildConversation(player);
+                Conversation conv = cf.withFirstPrompt(new CommandCompletionPrompt((BongoGUIPlugin) plugin, promptMessage, completionCommand)).withLocalEcho(false).buildConversation(player);
                 conv.begin();
             }
 

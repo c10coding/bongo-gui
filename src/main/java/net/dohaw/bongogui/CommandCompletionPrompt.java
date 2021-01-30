@@ -9,10 +9,12 @@ import org.bukkit.entity.Player;
 public class CommandCompletionPrompt extends StringPrompt {
 
     private String msg, command;
+    private BongoGUIPlugin plugin;
 
-    public CommandCompletionPrompt(String msg, String command){
+    public CommandCompletionPrompt(BongoGUIPlugin plugin, String msg, String command){
         this.msg = msg;
         this.command = command;
+        this.plugin = plugin;
     }
 
     @Override
@@ -24,8 +26,10 @@ public class CommandCompletionPrompt extends StringPrompt {
     public Prompt acceptInput(ConversationContext context, String input) {
         String commandToRun = command.replace("%input%", input);
         Player player = (Player) context.getForWhom();
-        player.sendRawMessage("Command ran: /" + commandToRun);
-        Bukkit.dispatchCommand(player, commandToRun);
+        // Makes it to where it gives command feedback
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.dispatchCommand(player, commandToRun);
+        },5);
         return null;
     }
 }
