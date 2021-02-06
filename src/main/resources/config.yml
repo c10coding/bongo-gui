@@ -43,7 +43,7 @@ Menus:
             - "heal %player%"
             - "fly %player%"
           GUI: example_menu2
-        Will Close On Click: true
+          Will Close On Click: true
   example_menu2:
     Title: Example Menu2
     Number of Slots: 9
@@ -58,4 +58,4 @@ Menus:
             - "heal %player%"
             - "fly %player%"
           GUI: example_menu2
-        Will Close On Click: true
+          Will Close On Click: true
