@@ -6,10 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GuiManager {
 
@@ -47,10 +44,14 @@ public class GuiManager {
                             PromptCompletionWrapper pcw = new PromptCompletionWrapper(promptMessage, completionCommand);
                             SlotActionWrapper actionWrapper = new SlotActionWrapper(commandsRanOnClick, guiOpenedOnClick, willCloseOnClick, pcw);
 
+                            String headUUIDStr = slotsSection.getString(rootPath + ".Head UUID", "6c9c944b-7771-447b-b332-fbade2f0e235");
+                            if(headUUIDStr == null){
+                                headUUIDStr = "";
+                            }
+                            UUID uuid = UUID.fromString(headUUIDStr);
+
                             int amount = slotsSection.getInt(rootPath + "Amount", 1);
-
                             String displayName = slotsSection.getString(rootPath + "Display Name", null);
-
                             Material mat = Material.valueOf(slotsSection.getString(rootPath + "Material", "RED_WOOL"));
 
                             GuiSlotInfo info = GuiSlotInfo.builder()
@@ -60,6 +61,7 @@ public class GuiManager {
                                 .material(mat)
                                 .numSlot(slot)
                                 .displayName(displayName)
+                                .playerHeadUUID(uuid)
                                 .build();
 
                             menuInfo.add(info);

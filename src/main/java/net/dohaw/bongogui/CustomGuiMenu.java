@@ -12,11 +12,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CustomGuiMenu extends Menu implements Listener {
 
@@ -33,6 +33,7 @@ public class CustomGuiMenu extends Menu implements Listener {
 
     @Override
     public void initializeItems(Player p) {
+
         for(GuiSlotInfo info : slotInfo){
 
             int slot = info.getNumSlot();
@@ -41,14 +42,39 @@ public class CustomGuiMenu extends Menu implements Listener {
             int amount = info.getAmount();
             List<String> lore = info.getLore();
 
-            inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
+            if(mat != Material.PLAYER_HEAD){
+                inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
+            }else{
+                inv.setItem(slot, getPlayerHead(info.getPlayerHeadUUID()));
+            }
 
             this.actionPerSlot.put(slot, info.getActionWrapper());
         }
+
         if(fillerMat != null){
             setFillerMaterial(fillerMat);
             fillMenu(false);
         }
+
+    }
+
+    private ItemStack getPlayerHead(UUID uuid){
+
+        boolean isNewVersion = Arrays.stream(Material.values()).map(Material::name).collect(Collectors.toList()).contains("PLAYER_HEAD");
+
+        Material type = Material.matchMaterial(isNewVersion ? "PLAYER_HEAD" : "SKULL_ITEM");
+        ItemStack item = new ItemStack(type, 1);
+
+        if (!isNewVersion)
+            item.setDurability((short) 3);
+
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+        meta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+
+        item.setItemMeta(meta);
+
+        return item;
+
     }
 
     @EventHandler
