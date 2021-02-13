@@ -6,7 +6,7 @@
 
     <groupId>net.dohaw</groupId>
     <artifactId>BongoGUI</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
 
     <name>BongoGUI</name>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>net.dohaw</groupId>
             <artifactId>CoreLib</artifactId>
-            <version>3.0.2</version>
+            <version>3.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

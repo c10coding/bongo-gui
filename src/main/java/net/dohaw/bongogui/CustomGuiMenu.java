@@ -45,7 +45,8 @@ public class CustomGuiMenu extends Menu implements Listener {
             if(mat != Material.PLAYER_HEAD){
                 inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
             }else{
-                inv.setItem(slot, getPlayerHead(info.getPlayerHeadUUID()));
+                ItemStack playerHead = getPlayerHead(info.getPlayerHeadUUID());
+                inv.setItem(slot, createGuiItem(playerHead, displayName, lore));
             }
 
             this.actionPerSlot.put(slot, info.getActionWrapper());
