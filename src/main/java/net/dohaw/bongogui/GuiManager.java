@@ -36,23 +36,19 @@ public class GuiManager {
 
                             List<String> lore = slotsSection.getStringList(rootPath + "Lore");
 
-                            List<String> commandsRanOnClick = slotsSection.getStringList(rootPath + "Actions.Commands");
+                            List<String> consoleCommandsRan = slotsSection.getStringList(rootPath + "Actions.Console Commands");
+                            List<String> playerCommandsRan = slotsSection.getStringList(rootPath + "Actions.Player Commands");
                             String guiOpenedOnClick = slotsSection.getString(rootPath + "Actions.GUI");
                             boolean willCloseOnClick = slotsSection.getBoolean(rootPath + "Actions.Will Close On Click");
                             String promptMessage = slotsSection.getString(rootPath + "Actions.Prompt.Message");
                             String completionCommand = slotsSection.getString(rootPath + "Actions.Prompt.Completion Command");
                             PromptCompletionWrapper pcw = new PromptCompletionWrapper(promptMessage, completionCommand);
-                            SlotActionWrapper actionWrapper = new SlotActionWrapper(commandsRanOnClick, guiOpenedOnClick, willCloseOnClick, pcw);
-
-                            String headUUIDStr = slotsSection.getString(rootPath + ".Head UUID", "6c9c944b-7771-447b-b332-fbade2f0e235");
-                            if(headUUIDStr == null){
-                                headUUIDStr = "";
-                            }
-                            UUID uuid = UUID.fromString(headUUIDStr);
+                            SlotActionWrapper actionWrapper = new SlotActionWrapper(consoleCommandsRan, playerCommandsRan, guiOpenedOnClick, willCloseOnClick, pcw);
 
                             int amount = slotsSection.getInt(rootPath + "Amount", 1);
                             String displayName = slotsSection.getString(rootPath + "Display Name", null);
                             Material mat = Material.valueOf(slotsSection.getString(rootPath + "Material", "RED_WOOL"));
+                            String playerHeadName = slotsSection.getString(rootPath + ".Head Name", "C10_MC");
 
                             GuiSlotInfo info = GuiSlotInfo.builder()
                                 .amount(amount)
@@ -61,7 +57,7 @@ public class GuiManager {
                                 .material(mat)
                                 .numSlot(slot)
                                 .displayName(displayName)
-                                .playerHeadUUID(uuid)
+                                .playerHeadName(playerHeadName)
                                 .build();
 
                             menuInfo.add(info);

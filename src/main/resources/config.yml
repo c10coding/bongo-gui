@@ -16,16 +16,19 @@ Menus:
     # The slots are 0 indexed meaning the first slot would be the number 0. The second slot is number 1, and so on...
     Slots:
       1:
-        Material: RED_WOOL
+        Material: PLAYER_HEAD
+        Head Name: WolverineX15
         Display Name: "The display name for the wool2"
         Lore:
           - "This is the first lore line2"
         Amount: 5
         Actions:
           # Don't put the slash for the command!
-          Commands:
+          Console Commands:
             - "heal %player%"
             - "fly %player%"
+          Player Commands:
+            - "home"
           GUI: example_menu2
           Prompt:
             Message: "Please type your faction name!"

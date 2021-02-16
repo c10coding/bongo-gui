@@ -45,7 +45,7 @@ public class CustomGuiMenu extends Menu implements Listener {
             if(mat != Material.PLAYER_HEAD){
                 inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
             }else{
-                ItemStack playerHead = getPlayerHead(info.getPlayerHeadUUID());
+                ItemStack playerHead = getPlayerHead(info.getPlayerHeadName());
                 inv.setItem(slot, createGuiItem(playerHead, displayName, lore));
             }
 
@@ -59,7 +59,7 @@ public class CustomGuiMenu extends Menu implements Listener {
 
     }
 
-    private ItemStack getPlayerHead(UUID uuid){
+    private ItemStack getPlayerHead(String playerHeadName){
 
         boolean isNewVersion = Arrays.stream(Material.values()).map(Material::name).collect(Collectors.toList()).contains("PLAYER_HEAD");
 
@@ -70,7 +70,8 @@ public class CustomGuiMenu extends Menu implements Listener {
             item.setDurability((short) 3);
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
-        meta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+        assert meta != null;
+        meta.setOwner(playerHeadName);
 
         item.setItemMeta(meta);
 
@@ -115,19 +116,16 @@ public class CustomGuiMenu extends Menu implements Listener {
                     conv.begin();
                 }
 
-                List<String> commandsRan = actionWrapper.getCommandsToExecute();
-                if(commandsRan != null ){
-                    if(!commandsRan.isEmpty()){
-                        for(String command : commandsRan){
-                            if(command.contains("/")){
-                                command = command.replace("/", "");
-                            }
-                            if(command.contains("%player%")){
-                                command = command.replace("%player%", player.getName());
-                            }
-                            player.performCommand(command);
-                        }
-                    }
+                List<String> playerCommandsRan = actionWrapper.getPlayerCommandsRan();
+                if(playerCommandsRan != null){
+                    replaceCommandPlaceholders(player, playerCommandsRan);
+                    playerCommandsRan.forEach(player::performCommand);
+                }
+
+                List<String> consoleCommandsRan = actionWrapper.getConsoleCommandsRan();
+                if(consoleCommandsRan != null){
+                    replaceCommandPlaceholders(player, consoleCommandsRan);
+                    consoleCommandsRan.forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
                 }
 
                 String guiKeyToOpen = actionWrapper.getGuiKeyToOpen();
@@ -144,6 +142,22 @@ public class CustomGuiMenu extends Menu implements Listener {
                     }
                 }
 
+            }
+
+        }
+
+    }
+
+    private void replaceCommandPlaceholders(Player player, List<String> commands){
+
+        for (int i = 0; i < commands.size(); i++) {
+
+            String command = commands.get(i);
+            if(command.contains("/")){
+                commands.set(i, command.replace("/", ""));
+            }
+            if(command.contains("%player%")){
+                commands.set(i, command.replace("%player%", player.getName()));
             }
 
         }
