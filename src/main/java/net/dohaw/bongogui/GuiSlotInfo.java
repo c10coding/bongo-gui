@@ -13,7 +13,7 @@ public class GuiSlotInfo {
     @Getter private int numSlot;
     @Getter SlotActionWrapper actionWrapper;
     @Getter private Material material;
-    @Getter private String playerHeadName;
+    @Getter private String headLink;
     @Getter private int amount;
     @Getter private String displayName;
     @Getter private List<String> lore;

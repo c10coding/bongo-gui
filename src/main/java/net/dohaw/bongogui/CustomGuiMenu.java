@@ -1,5 +1,7 @@
 package net.dohaw.bongogui;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.menus.Menu;
 import org.bukkit.Bukkit;
@@ -15,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +48,7 @@ public class CustomGuiMenu extends Menu implements Listener {
             if(mat != Material.PLAYER_HEAD){
                 inv.setItem(slot, createGuiItem(mat, displayName, amount, lore));
             }else{
-                ItemStack playerHead = getPlayerHead(info.getPlayerHeadName());
+                ItemStack playerHead = getPlayerHead(info.getHeadLink());
                 inv.setItem(slot, createGuiItem(playerHead, displayName, lore));
             }
 
@@ -59,22 +62,27 @@ public class CustomGuiMenu extends Menu implements Listener {
 
     }
 
-    private ItemStack getPlayerHead(String playerHeadName){
+    private ItemStack getPlayerHead(String url){
 
-        boolean isNewVersion = Arrays.stream(Material.values()).map(Material::name).collect(Collectors.toList()).contains("PLAYER_HEAD");
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        if(url.isEmpty())return item;
 
-        Material type = Material.matchMaterial(isNewVersion ? "PLAYER_HEAD" : "SKULL_ITEM");
-        ItemStack item = new ItemStack(type, 1);
-
-        if (!isNewVersion)
-            item.setDurability((short) 3);
-
-        SkullMeta meta = (SkullMeta) item.getItemMeta();
-        assert meta != null;
-        meta.setOwner(playerHeadName);
-
-        item.setItemMeta(meta);
-
+        SkullMeta itemMeta = (SkullMeta) item.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        byte[] encodedData = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+        Field profileField;
+        try
+        {
+            profileField = itemMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(itemMeta, profile);
+        }
+        catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        item.setItemMeta(itemMeta);
         return item;
 
     }

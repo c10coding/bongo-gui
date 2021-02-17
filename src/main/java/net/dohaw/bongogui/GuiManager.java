@@ -48,7 +48,7 @@ public class GuiManager {
                             int amount = slotsSection.getInt(rootPath + "Amount", 1);
                             String displayName = slotsSection.getString(rootPath + "Display Name", null);
                             Material mat = Material.valueOf(slotsSection.getString(rootPath + "Material", "RED_WOOL"));
-                            String playerHeadName = slotsSection.getString(rootPath + ".Head Name", "C10_MC");
+                            String headLink = slotsSection.getString(rootPath + ".Head Link", "");
 
                             GuiSlotInfo info = GuiSlotInfo.builder()
                                 .amount(amount)
@@ -57,7 +57,7 @@ public class GuiManager {
                                 .material(mat)
                                 .numSlot(slot)
                                 .displayName(displayName)
-                                .playerHeadName(playerHeadName)
+                                .headLink(headLink)
                                 .build();
 
                             menuInfo.add(info);
