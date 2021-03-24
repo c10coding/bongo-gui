@@ -15,3 +15,7 @@ commands:
 permissions:
   bongogui.reload:
     default: op
+  bongogui.vanish:
+    default: not op
+  bongogui.show:
+    default: not op

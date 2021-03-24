@@ -7,6 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashSet;
+import java.util.UUID;
+
 /*
     Made by c10coding on Github.
     Email: caleb.ja.owens@gmail.com
@@ -14,6 +17,8 @@ import org.bukkit.scheduler.BukkitTask;
     Hello future person :)
  */
 public final class BongoGUIPlugin extends JavaPlugin {
+
+    public HashSet<UUID> nonShowers = new HashSet<>();
 
     public static ItemStack guiActivator;
     @Getter private BaseConfig baseConfig;
@@ -45,7 +50,7 @@ public final class BongoGUIPlugin extends JavaPlugin {
     public void loadFields(){
         this.activatorMenuKey = baseConfig.getActivatorMenuKey();
         guiActivator = BongoUtils.createGuiActivator(this);
-        this.compassChecker = new ActivatorChecker().runTaskTimer(this, 0L, 100L);
+        this.compassChecker = new ActivatorChecker(this).runTaskTimer(this, 0L, 100L);
         this.guiManager = new GuiManager(this);
         guiManager.loadGuis();
     }
