@@ -15,7 +15,10 @@ commands:
 permissions:
   bongogui.reload:
     default: op
+    description: Reloads the plugin
   bongogui.vanish:
-    default: not op
+    default: true
+    description: Allows the player to make the Bongo Activator disappear
   bongogui.show:
-    default: not op
+    default: true
+    description: Allows the player to make the Bongo Activator reappear
